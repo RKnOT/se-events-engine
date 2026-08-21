@@ -1,0 +1,217 @@
+.se-events-box {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccd0d4;
+}
+
+
+/* Beide Spalten gleich behandeln */
+.inline-editor .inline-edit-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-left: 20px;
+}
+
+/* Labels vertikal (NICHT grid!) */
+.inline-editor label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Label Style */
+.inline-editor .title {
+    font-weight: 600;
+    color: #1d2327;
+}
+
+/* Inputs full width */
+.inline-editor input,
+.inline-editor select {
+    width: 100%;
+}
+
+/* Rechte Spalte gleiche Struktur erzwingen */
+.inline-editor .inline-edit-col-left .inline-edit-col  {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.inline-editor label:has(select[name="se_event_status"]) {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.inline-editor select[name="se_event_status"] {
+    width: 100%;
+}
+.inline-editor .inline-edit-save {
+    margin-left: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.inline-editor input,
+.inline-editor select {
+    height: 32px;
+}
+
+
+
+#se_event_when .inside {
+
+    padding: 16px;
+}
+
+#se_event_when .se-row {
+
+    display: flex;
+
+    align-items: center;
+
+    margin-bottom: 14px;
+}
+
+#se_event_when label {
+
+    width: 110px;
+
+    font-size: 16px;
+
+    font-weight: 500;
+}
+
+#se_event_when input[type="date"],
+#se_event_when input[type="time"] {
+
+    width: 180px;
+
+    height: 42px;
+
+    padding: 0 12px;
+
+    border: 1px solid #8c8f94;
+
+    border-radius: 6px;
+
+    font-size: 16px;
+
+    background: #fff;
+}
+
+
+
+
+/*----------------------*/
+
+.se-box{
+    background:#f5f5f5;
+    border:1px solid #ccc;
+    margin-top:20px;
+}
+
+.se-box-header{
+    padding:15px 20px;
+    border-bottom:1px solid #ccc;
+}
+
+.se-content{
+    padding:25px;
+}
+
+.se-content h3{
+    font-size:20px;
+    margin-top:30px;
+    margin-bottom:20px;
+}
+
+.se-row{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+}
+
+.se-row input[type="date"],
+.se-row input[type="time"],
+.se-row input[type="number"]{
+    min-width:180px;
+    height:42px;
+    font-size:22px;
+}
+
+.se-saving{
+    background: #9aa0a6 !important;
+    border-color: #9aa0a6 !important;
+    color: #ffffff !important;
+    cursor: not-allowed;
+    opacity: 0.85;
+}
+.se-rce-list{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+.se-rce-item{
+    padding:8px 0;
+    border-bottom:1px solid #ddd;
+}
+
+
+.radio-wrap{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:20px;
+}
+
+
+.weekday-row{
+    margin-top:20px;
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    font-size:18px;
+}
+
+.weekday-row label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.weekday-row input{
+    width:24px;
+    height:24px;
+}
+
+.button-row{
+    margin-top:30px;
+    display:flex;
+    gap:12px;
+}
+
+.duration-label{
+    font-size:18px;
+}
+
+#se-debug-console{
+    background:#111;
+    color:#0f0;
+    padding:15px;
+    margin-top:25px;
+    height:180px;
+    overflow:auto;
+}
+
+#interval{
+    width:80px !important;
+    min-width:80px;
+    flex:0 0 80px;
+}
+
+/*-------------------*/
