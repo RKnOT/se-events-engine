@@ -264,6 +264,18 @@ function se_events_modern_shortcode($atts = []) {
                                 src="<?php echo esc_url($image); ?>"
                                 alt=""
                             >
+
+                            <?php
+                            // ki generiertes bild beschriften
+                                $ki = get_post_meta($event['post_id'], 'KI', true );
+                                if ( ! empty( $ki ) ) {
+                                    echo '<div class="se-search-ki">';
+                                    echo esc_html( $ki );
+                                    echo '</div>';
+                                }
+                                ?>
+
+
                         <?php endif; ?>
                     </div>
                     <div class="se-modern-divider"></div>
