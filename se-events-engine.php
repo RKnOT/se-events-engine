@@ -6,6 +6,7 @@
  * Author: RKnOT
  * Copyright(C) 2026, RKnOT 
  * 
+ * version 3.2.9    -> 2026_10_28 Änderung bei Umstellung auf PHP 8.5.12 in se_event_add.php
  * version 3.2.8    -> 2026_08_20 Vereinheitlichung der globalen Variablen und Vereinfachungen
  * version 3.2.7    -> 2026_08_19 Vereinheitlichung der globalen Variablen
  * version 3.2.6    -> 2026_08_18 Vereinheitlicht  $wpdb->prefix . 'se_events' in SE_EVENTS_TABLE

@@ -1,5 +1,20 @@
 <?php
 
+  /*
+        Änderung bei Umstellung auf PHP 8.5.12
+        von: 
+            $date->modify('+1 day');
+            $date->setTime(10, 0);
+            $date->setTime(11, 0);
+
+        auf:
+            $date = $date->modify('+1 day');
+            $date = $date->setTime(10, 0);
+            $date = $date->setTime(11, 0);
+
+
+        */
+
 class Event_Factory {
 
     public static function create($data) {
@@ -18,16 +33,14 @@ class Event_Factory {
         $post = get_post($post_id, ARRAY_A);
         $user_id = get_current_user_id();
 
-
         $date = current_datetime();
-        $date->modify('+1 day');
+        $date = $date->modify('+1 day');
 
         $dd  = $date->format('Y-m-d');
-        $date->setTime(10, 0);
+        $date = $date->setTime(10, 0);
         $ds  = $date->format('Y-m-d H:i');
         $dsu = $date->format('H:i');
-
-        $date->setTime(11, 0);
+        $date = $date->setTime(11, 0);
         $de  = $date->format('Y-m-d H:i');
         $deu = $date->format('H:i');
 
@@ -125,15 +138,12 @@ class Event_Factory {
 
         // 🔥 Datum setzen
         $date = current_datetime();
-        $date->modify('+1 day');
-
+        $date = $date->modify('+1 day');
         $dd = $date->format('Y-m-d');
-
-        $date->setTime(10, 0);
+        $date = $date->setTime(10, 0);
         $ds  = $date->format('Y-m-d H:i');
         $dsu = $date->format('H:i');
-
-        $date->setTime(11, 0);
+        $date = $date->setTime(11, 0);
         $de  = $date->format('Y-m-d H:i');
         $deu = $date->format('H:i');
 
@@ -397,12 +407,12 @@ class Event_Factory {
             global $wpdb;
             $user_id = get_current_user_id();
             $date = current_datetime();
-            $date->modify('+1 day');
+            $date = $date->modify('+1 day');
             $dd = $date->format('Y-m-d');
-            $date->setTime(10, 0);
+            $date = $date->setTime(10, 0);
             $ds  = $date->format('Y-m-d H:i');
-            $dsu = $date->format('H:i');
-            $date->setTime(11, 0);
+            $dsu = $date->format('H:i');S
+            $date = $date->setTime(11, 0);
             $de  = $date->format('Y-m-d H:i');
             $deu = $date->format('H:i');
             // RRULE normalisieren
