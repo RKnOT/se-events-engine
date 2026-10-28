@@ -398,8 +398,6 @@ class Event_Factory {
     }
 
     public static function create_parent_from_post($post_id, $rrule) {
-
-    
         $new_post_id = self::clone_post_to_event($post_id);
         if (!$new_post_id) return false;
         $post = get_post($new_post_id, ARRAY_A);
@@ -411,7 +409,7 @@ class Event_Factory {
             $dd = $date->format('Y-m-d');
             $date = $date->setTime(10, 0);
             $ds  = $date->format('Y-m-d H:i');
-            $dsu = $date->format('H:i');S
+            $dsu = $date->format('H:i');
             $date = $date->setTime(11, 0);
             $de  = $date->format('Y-m-d H:i');
             $deu = $date->format('H:i');
@@ -481,9 +479,6 @@ class Event_Factory {
 
         return $map[$day];
     }
-  
-    
-  
       
     private static function build_dates_from_rrule($start_date, $rrule) {
 
