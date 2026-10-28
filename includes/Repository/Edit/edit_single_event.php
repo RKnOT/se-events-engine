@@ -257,8 +257,11 @@ class SE_Event_Editor extends SE_GET_EVENT_TYP{
             $stat = $this->get_stat();
         }
         add_meta_box('se_event_publish','Veröffentlichen',[$this,'box_publish'],'se_event','side','high');
+        // KI-Feld für SE und RCE
+        add_meta_box('se_event_ki', 'KI',[$this, 'box_ki'],'se_event','side','high');
         if( $stat['EType'] == 'se' || $stat['EType'] == 'rce'){
             add_meta_box('se_event_when','Wann',[$this,'box_when'],'se_event','side');
+
         }
         add_meta_box('se_event_categories','Veranstaltungskategorien',[$this,'box_categories'],'se_event','side');
         add_meta_box('se_event_owner', 'Event Owner', [$this,'box_owner'], 'se_event', 'side');
@@ -332,6 +335,44 @@ class SE_Event_Editor extends SE_GET_EVENT_TYP{
                 postboxes.add_postbox_toggles('se_event');
             });
         </script>
+        <?php
+    }
+    /**
+     * KI-Metafeld anzeigen und bearbeiten
+     */
+    public function box_ki() {
+
+        if (empty($this->event->post_id)) {
+            echo '<p>Kein zugehöriger WordPress-Beitrag gefunden.</p>';
+            return;
+        }
+
+        $post_id = (int) $this->event->post_id;
+
+        // KI-Metafeld bei Bedarf leer anlegen
+        if (!metadata_exists('post', $post_id, 'KI')) {
+            add_post_meta($post_id, 'KI', '', true);
+        }
+
+        // Vorhandenen Wert laden
+        $ki = get_post_meta($post_id, 'KI', true);
+        ?>
+
+        <p>
+            <label for="se_event_ki"><strong>KI</strong></label>
+        </p>
+
+        <textarea
+            id="se_event_ki"
+            name="event_ki"
+            rows="3"
+            style="width:100%;"
+        ><?php echo esc_textarea($ki); ?></textarea>
+
+        <p class="description">
+            KI-Wert für dieses Event.
+        </p>
+
         <?php
     }
 
@@ -739,6 +780,52 @@ class SE_Event_Editor extends SE_GET_EVENT_TYP{
             'post_content'=>wp_kses_post($_POST['post_content']),
             'post_status'=>sanitize_text_field($_POST['post_status'])
         ]);
+        
+
+        /*
+        * KI-Metafeld speichern
+        */
+        if (isset($_POST['event_ki'])) {
+            $ki = sanitize_textarea_field(wp_unslash($_POST['event_ki']));
+
+            // KI-Wert des aktuellen Events speichern
+            update_post_meta($post_id, 'KI', $ki);
+
+            // Event-Typ ermitteln
+            $event_type = $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT event_type
+                    FROM {$this->table}
+                    WHERE event_id = %d",
+                    $event_id
+                )
+            );
+
+            // Bei einem RPE den KI-Wert auf alle zugehörigen RCE übertragen,
+            // auch wenn der Wert leer ist.
+            if ($event_type === 'rpe') {
+                $rce_events = $wpdb->get_results(
+                    $wpdb->prepare(
+                        "SELECT post_id
+                        FROM {$this->table}
+                        WHERE recurrence_id = %d
+                        AND event_type = %s",
+                        $event_id,
+                        'rce'
+                    )
+                );
+
+                if ($rce_events) {
+                    foreach ($rce_events as $rce) {
+                        $rce_post_id = (int) $rce->post_id;
+
+                        if ($rce_post_id > 0) {
+                            update_post_meta($rce_post_id, 'KI', $ki);
+                        }
+                    }
+                }
+            }
+        }
 
        
         /*
