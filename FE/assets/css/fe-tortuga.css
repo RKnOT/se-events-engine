@@ -1,0 +1,443 @@
+/* =========================================================
+   SE MODERN EVENTS
+========================================================= */
+
+.se-modern-events-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 30px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.se-modern-title {
+    font-size: 52px;
+    font-weight: 300;
+    color: #a2191f;
+    text-transform: uppercase;
+    margin-bottom: 0px;
+    letter-spacing: 1px;
+}
+
+/* =========================================================
+   MONTH
+========================================================= */
+
+.se-modern-month {
+    font-size: 20px;
+    font-weight: 400;
+    color: #111;
+    margin: 0px 0 40px;
+}
+
+/* =========================================================
+   EVENT ITEM
+========================================================= */
+
+.se-modern-event {
+    display: grid;
+    grid-template-columns:
+        200px
+        6px
+        1fr;
+    gap: 40px;
+    align-items: start;
+    padding: 50px 0;
+    border-top: 1px solid #ddd;
+}
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.se-modern-image {
+    width: 100%;
+}
+
+
+
+.se-modern-image img{
+    display:block;
+    width:250px;
+    height:auto;
+/*    border:2px solid #c62828;  */
+}
+
+/* =========================================================
+   YELLOW DIVIDER
+========================================================= */
+
+
+
+
+
+
+.se-modern-divider {
+    background: #f2b632;
+    width: 6px;
+    min-height: 100%;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.se-modern-content {
+    width: 100%;
+}
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.se-modern-event-title {
+
+    font-size: clamp(32px, 3vw, 20px);
+
+    line-height: 1.1;
+
+    font-weight: 300;
+
+    margin: 0 0 30px;
+}
+
+.se-modern-event-title a {
+
+    color: #2f62ff;
+
+    text-decoration: none;
+
+    transition: color .2s ease;
+}
+
+.se-modern-event-title a:hover {
+    color: #ccc;
+}
+
+/* =========================================================
+   META
+========================================================= */
+
+.se-modern-meta {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 25px;
+
+    margin-bottom: 0px;
+
+    color: #666;
+
+    font-size: 15px;
+}
+
+.se-modern-meta-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.se-modern-description {
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    color: #555;
+
+    max-width: 900px;
+
+    margin-bottom: 0px;
+}
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.se-modern-button {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 260px;
+    padding: 18px 30px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #444;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all .2s ease;
+}
+
+.se-modern-button:hover {
+
+    background: #ccc;
+
+    border-color: #ccc;
+
+    color: #fff;
+}
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+.se-pagination {
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin: 1px 0;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow-x: auto;
+    font-size: 15px;
+}
+
+.se-pagination {
+    padding: 0;
+}
+
+.se-pagination-count {
+
+    margin-right: 20px;
+
+    color: #444;
+}
+
+.se-page-nav {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid #2271b1;
+
+    border-radius: 4px;
+
+    text-decoration: none;
+
+    color: #2271b1;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    transition: all .15s ease;
+}
+
+.se-page-nav:hover {
+
+    background: #2271b1;
+
+    color: #fff;
+}
+
+.se-page-nav.disabled {
+
+    opacity: .4;
+
+    pointer-events: none;
+
+    border-color: #ccc;
+
+    color: #999;
+}
+
+.se-pagination-form {
+    margin: 0;
+}
+
+.se-page-input {
+
+    width: 70px;
+
+    height: 42px;
+
+    margin: 0;
+
+    text-align: center;
+
+    border: 1px solid #999;
+
+    border-radius: 4px;
+
+    font-size: 12px;
+}
+
+.se-pagination-total {
+    color: #444;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .se-modern-event {
+
+        grid-template-columns: 1fr;
+
+        gap: 25px;
+    }
+
+    .se-modern-divider {
+        display: none;
+    }
+    
+    .se-modern-image {
+        max-width: 100%;
+   
+    }
+
+
+
+    .se-modern-meta {
+        gap: 18px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .se-modern-events-wrapper {
+        padding: 20px;
+    }
+
+    .se-modern-title {
+        font-size: 15px;
+    }
+
+    .se-modern-month {
+        font-size: 15px;
+    }
+
+    .se-modern-event-title {
+        font-size: 15px;
+    }
+
+    .se-modern-description {
+        font-size: 12px;
+    }
+
+    .se-modern-meta {
+        font-size: 12px;
+    }
+
+    .se-modern-button {
+
+        width: 100%;
+
+        min-width: auto;
+    }
+}
+
+/* =========================================================
+   SEARCH BAR
+========================================================= */
+
+
+.se-modern-search {
+    display: flex;
+    align-items: stretch;
+
+    border: 1px solid #e5e5e5;
+    background: #fff;
+
+    min-height: 78px;
+    padding: 0;
+}
+
+/* Suchbereich */
+
+.se-search-field {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 0 24px;
+    border-right: 1px solid #e5e5e5;
+}
+
+.se-search-icon {
+    font-size: 18px;
+    color: #888;
+}
+
+.se-search-field input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+
+    font-size: 18px;
+    color: #555;
+}
+
+.se-search-field input::placeholder {
+    color: #999;
+}
+
+/* Button von parend theme */
+
+.se-search-button .icon {
+    width: 28px;
+    height: 28px;
+    fill: #fff;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+    .se-modern-search {
+        grid-template-columns: 1fr;
+    }
+    .se-search-field,
+    .se-search-date,
+    .se-search-filter {
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .se-search-button {
+        margin: 20px;
+    }
+}
+/* =========================================================
+   KI generierte bildbeschriftung
+========================================================= */
+
+.se-search-ki {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 4px 10px;
+    /*------------
+    background: #f3f3f3;
+    border-left: 3px solid #b5121b;
+    color: #666;
+    ----------*/
+    font-size: 10px;
+    line-height: 1.4;
+    font-style: italic;
+}

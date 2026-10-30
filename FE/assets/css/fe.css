@@ -1,443 +1,456 @@
-/* =========================================================
-   SE MODERN EVENTS
-========================================================= */
-
-.se-modern-events-wrapper {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 40px 30px;
-}
-
-/* =========================================================
-   HEADER
-========================================================= */
-
-.se-modern-title {
-    font-size: 52px;
-    font-weight: 300;
-    color: #a2191f;
-    text-transform: uppercase;
-    margin-bottom: 0px;
-    letter-spacing: 1px;
-}
-
-/* =========================================================
-   MONTH
-========================================================= */
-
-.se-modern-month {
-    font-size: 20px;
-    font-weight: 400;
-    color: #111;
-    margin: 0px 0 40px;
-}
-
-/* =========================================================
-   EVENT ITEM
-========================================================= */
-
-.se-modern-event {
-    display: grid;
-    grid-template-columns:
-        200px
-        6px
-        1fr;
-    gap: 40px;
-    align-items: start;
-    padding: 50px 0;
-    border-top: 1px solid #ddd;
-}
-
-/* =========================================================
-   IMAGE
-========================================================= */
-
-.se-modern-image {
-    width: 100%;
-}
-
-
-
-.se-modern-image img{
-    display:block;
-    width:250px;
-    height:auto;
-/*    border:2px solid #c62828;  */
-}
-
-/* =========================================================
-   YELLOW DIVIDER
-========================================================= */
-
-
-
-
-
-
-.se-modern-divider {
-    background: #f2b632;
-    width: 6px;
-    min-height: 100%;
-}
-
-/* =========================================================
-   CONTENT
-========================================================= */
-
-.se-modern-content {
-    width: 100%;
-}
-
-/* =========================================================
-   TITLE
-========================================================= */
-
-.se-modern-event-title {
-
-    font-size: clamp(32px, 3vw, 20px);
-
-    line-height: 1.1;
-
-    font-weight: 300;
-
-    margin: 0 0 30px;
-}
-
-.se-modern-event-title a {
-
-    color: #2f62ff;
-
-    text-decoration: none;
-
-    transition: color .2s ease;
-}
-
-.se-modern-event-title a:hover {
-    color: #ccc;
-}
-
-/* =========================================================
-   META
-========================================================= */
-
-.se-modern-meta {
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 25px;
-
-    margin-bottom: 0px;
-
-    color: #666;
-
-    font-size: 15px;
-}
-
-.se-modern-meta-item {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-}
-
-/* =========================================================
-   DESCRIPTION
-========================================================= */
-
-.se-modern-description {
-
-    font-size: 12px;
-
-    line-height: 1.5;
-
-    color: #555;
-
-    max-width: 900px;
-
-    margin-bottom: 0px;
-}
-
-/* =========================================================
-   BUTTON
-========================================================= */
-
-.se-modern-button {
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 260px;
-    padding: 18px 30px;
-    border: 1px solid #ccc;
-    text-decoration: none;
-    color: #444;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    transition: all .2s ease;
-}
-
-.se-modern-button:hover {
-
-    background: #ccc;
-
-    border-color: #ccc;
-
-    color: #fff;
-}
-
-/* =========================================================
-   PAGINATION
-========================================================= */
-.se-pagination {
-
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 12px;
-    margin: 1px 0;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    overflow-x: auto;
-    font-size: 15px;
-}
-
-.se-pagination {
-    padding: 0;
-}
-
-.se-pagination-count {
-
-    margin-right: 20px;
-
-    color: #444;
-}
-
-.se-page-nav {
-
-    display: inline-flex;
-
-    align-items: center;
-    justify-content: center;
-
-    width: 42px;
-    height: 42px;
-
-    border: 1px solid #2271b1;
-
-    border-radius: 4px;
-
-    text-decoration: none;
-
-    color: #2271b1;
-
-    font-size: 12px;
-
-    font-weight: 600;
-
-    transition: all .15s ease;
-}
-
-.se-page-nav:hover {
-
-    background: #2271b1;
-
-    color: #fff;
-}
-
-.se-page-nav.disabled {
-
-    opacity: .4;
-
-    pointer-events: none;
-
-    border-color: #ccc;
-
-    color: #999;
-}
-
-.se-pagination-form {
-    margin: 0;
-}
-
-.se-page-input {
-
-    width: 70px;
-
-    height: 42px;
-
-    margin: 0;
-
-    text-align: center;
-
-    border: 1px solid #999;
-
-    border-radius: 4px;
-
-    font-size: 12px;
-}
-
-.se-pagination-total {
-    color: #444;
-}
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media (max-width: 1100px) {
-
-    .se-modern-event {
-
-        grid-template-columns: 1fr;
-
-        gap: 25px;
-    }
-
-    .se-modern-divider {
-        display: none;
-    }
+<?php
+defined('ABSPATH') || exit;
+function se_events_modern_shortcode($atts = []) {
+    global $wpdb;
     
-    .se-modern-image {
-        max-width: 100%;
+    ob_start();
+    
+    $table = SE_EVENTS_TABLE;
+
+    // ==========================
+    // 🔹 Pagination
+    // ==========================
+
+    $per_page = 5;
+
+    $paged = max(
+        1,
+        (int) ($_GET['se_page'] ?? 1)
+    );
+
+    $offset = ($paged - 1) * $per_page;
+
+
+    // ==========================
+    // 🔹 DB Querry instanzieren
+    // ==========================
+    $table = SE_EVENTS_TABLE;
+    $event_db = new SE_Event_Repository();
+
+    $search = sanitize_text_field($_GET['se_search'] ?? '');
+    $event_date = sanitize_text_field($_GET['se_date'] ?? 'future');
+    // ==========================
+    // 🔹 Gesamtanzahl
+    // ==========================
    
+    $args = [
+    'status'     => 'publish',
+    'event_type' => ['se, se_event, rce'],
+    'event_date' => 'future',
+    'sort'       => 'ASC',
+    'search'     => sanitize_text_field($_GET['se_search'] ?? ''),
+];
+    $total_items = $event_db->count_filtered($args);
+  
+    $total_pages = ceil($total_items / $per_page);
+    // debug
+    //print_r('total items: ' . $total_items . ' total pages: ' . $total_pages);
+
+    $paged = max(
+        1,
+        (int) ($_GET['se_page'] ?? 1)
+    );
+    if ($paged > $total_pages) {
+        $paged =  $total_pages;
+    }
+    $offset = ($paged - 1) * $per_page;
+    // ==========================
+    // 🔹 Events laden
+    // ==========================
+
+    $today = current_time('Y-m-d H:i');
+    $search = sanitize_text_field($_GET['se_search'] ?? '');
+
+    //------------------------------------
+   
+    $args = [
+        'status'     => 'publish',
+        'event_type' => ['se, se_event, rce'],
+        'event_date' => 'future',
+        'sort'       => 'ASC',
+        'search'     => sanitize_text_field(
+            $_GET['se_search'] ?? ''
+        ),
+        'limit'      => $per_page,
+        'offset'     => $offset,
+    ];
+    $events = $event_db->get_events($args);
+    $total_items = $event_db->count_filtered($args);
+    //----------------------------------------------
+    if (empty($events)) {
+        return '<p>Keine Veranstaltungen gefunden.</p>';
+    }
+    // =====================================================
+    //    SEARCH BAR
+    // ===================================================== 
+    ?>
+    <div class="se-events-engine">
+    <form class="se-modern-search" method="get">
+
+    <label class="se-search-field">
+
+        <span class="screen-reader-text">
+            Veranstaltungen suchen
+        </span>
+
+        <input
+            type="search"
+            class="search-field"
+            name="se_search"
+            placeholder="Veranstaltungen suchen ..."
+            value="<?php echo esc_attr($_GET['se_search'] ?? ''); ?>"
+        />
+
+    </label>
+
+    <button type="submit" class="search-submit se-search-button">
+
+        <svg
+            class="se-search-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            focusable="false"
+        >
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+        </svg>
+
+        <span class="screen-reader-text">
+            Veranstaltungen suchen
+        </span>
+
+    </button>
+
+</form>
+
+        
+   
+    </div>
+    <?php
+    // ==========================
+    // 🔹 Pagination HTML
+    // ==========================
+
+    $pagination = '';
+
+    if ($total_pages > 1) {
+
+        $base_url = remove_query_arg('se_page');
+
+        $pagination .= '<div class="se-pagination">';
+
+        // Anzahl
+        $pagination .= '<span class="se-pagination-count">';
+        $pagination .= $total_items . ' Einträge';
+        $pagination .= '</span>';
+
+        // Erste Seite
+        if ($paged > 1) {
+
+            $pagination .= sprintf(
+                '<a class="se-page-nav" href="%s">«</a>',
+                esc_url(add_query_arg('se_page', 1, $base_url))
+            );
+
+            $pagination .= sprintf(
+                '<a class="se-page-nav" href="%s">‹</a>',
+                esc_url(add_query_arg('se_page', $paged - 1, $base_url))
+            );
+
+        } else {
+
+            $pagination .= '<span class="se-page-nav disabled">«</span>';
+            $pagination .= '<span class="se-page-nav disabled">‹</span>';
+        }
+
+        // Input
+        $pagination .= '
+            <form class="se-pagination-form" method="get">
+
+                <input
+                    type="number"
+                    min="1"
+                    max="' . esc_attr($total_pages) . '"
+                    name="se_page"
+                    value="' . esc_attr($paged) . '"
+                    class="se-page-input"
+                >
+
+            </form>
+        ';
+
+        // Gesamtseiten
+        $pagination .= '
+            <span class="se-pagination-total">
+                von ' . $total_pages . '
+            </span>
+        ';
+
+        // Weiter
+        if ($paged < $total_pages) {
+
+            $pagination .= sprintf(
+                '<a class="se-page-nav" href="%s">›</a>',
+                esc_url(add_query_arg('se_page', $paged + 1, $base_url))
+            );
+
+            $pagination .= sprintf(
+                '<a class="se-page-nav" href="%s">»</a>',
+                esc_url(add_query_arg('se_page', $total_pages, $base_url))
+            );
+
+        } else {
+
+            $pagination .= '<span class="se-page-nav disabled">›</span>';
+            $pagination .= '<span class="se-page-nav disabled">»</span>';
+        }
+
+        $pagination .= '</div>';
     }
 
+  
+
+    ?>
+    <div class="se-events-engine">
+        <div class="se-modern-events-wrapper">
+            <!-- 🔥 Pagination oben -->
+            <?php echo $pagination; ?>
+            <?php
+            $current_month = '';
+            foreach ($events as $event) :
+                $timestamp = strtotime(
+                    $event['event_start_date']
+                    . ' '
+                    . $event['event_start_time']
+                );
+                $month = date_i18n('F Y', $timestamp);
+                if ($month !== $current_month) {
+                    $current_month = $month;
+                    echo '<h3 class="se-modern-month">'
+                        . esc_html($month)
+                        . '</h3>';
+                }
+                /*
+                $image = '';
+
+                if (!empty($event['post_id'])) {
+                    $image = get_the_post_thumbnail_url($event['post_id'], 'medium');
+                }
+                */
+                $image = '';
+                $thumbnail_id = 0;
+                if (!empty($event['post_id'])) {
+
+                    $thumbnail_id = get_post_thumbnail_id($event['post_id']);
+
+                    if ($thumbnail_id) {
+                        $image = wp_get_attachment_image_url(
+                            $thumbnail_id,
+                            'medium'
+                        );
+                        
+                    }
+
+                }
+
+                $day   = date_i18n('d', strtotime($event['event_start']));
+                $month = strtoupper(date_i18n('M', strtotime($event['event_start'])));
+                $svg = '
+                <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+                    <rect width="200" height="200" rx="12" fill="#f3f3f3"/>
+                    <rect width="200" height="48" fill="#c62828"/>
+                    <text x="100" y="35" font-family="Arial" font-size="20" fill="white" text-anchor="middle">'.$month.'</text>
+                    <text x="100" y="135" font-family="Arial" font-size="82" font-weight="bold" fill="#444" text-anchor="middle">'.$day.'</text>
+                </svg>';
+
+                $image_calender = 'data:image/svg+xml;utf8,' . rawurlencode($svg);
+                ?>
+                <div class="se-modern-event">
+                    <div class="se-modern-image">
+                        <?php if ($image) : ?>
+                            <img
+                                src="<?php echo esc_url($image); ?>"
+                                alt=""
+                            >
+
+                            <?php
+                            // ki generiertes bild beschriften
+                                $ki = get_post_meta($event['post_id'], 'KI', true );
+                                if ( ! empty( $ki ) ) {
+                                    echo '<div class="se-search-ki">';
+                                    echo esc_html( $ki );
+                                    echo '</div>';
+                                }
+                                ?>
 
 
-    .se-modern-meta {
-        gap: 18px;
-    }
+                        <?php endif; ?>
+                    </div>
+                    <div class="se-modern-divider"></div>
+                    <div class="se-modern-content">
+                        <h2 class="se-modern-event-title">
+                            <a href="<?php echo esc_url(get_permalink($event['post_id'])); ?>">
+                                <?php echo esc_html($event['event_name']); ?>
+                            </a>
+                        </h2>
+                        <div class="se-modern-meta">
+                            <div class="se-modern-meta-item">
+                              <img
+                                    src="<?php echo esc_attr( $image_calender); ?>"
+                                    alt=""
+                                    style="width:30px; height:30px; object-fit:contain;"
+                                >
+                                <?php echo date_i18n('m.Y', $timestamp); ?>
+
+
+                               
+                            </div>
+                            <div class="se-modern-meta-item">
+                                🕒
+                                <?php echo substr($event['event_start_time'],0,5); ?>
+                                -
+                                <?php echo substr($event['event_end_time'],0,5); ?>
+                            </div>
+                            <div class="se-modern-meta-item">
+                                📍
+                                <?php 
+                                    $location ='';
+                                    if (!empty($event['location_id'])) {
+                                        $location =  $event_db->get_location_name($event['location_id']);    
+                                    };
+                                    echo esc_html($location);
+                                ?>
+                            </div>
+                        </div>
+                        <div class="se-modern-description">
+                            <?php
+                            echo wp_trim_words(
+                                wp_strip_all_tags(
+                                    get_post_field(
+                                        'post_content',
+                                        $event['post_id']
+                                    )
+                                ),
+                                35,
+                                ' [...]'
+                            );
+                            ?>
+                        </div>
+                        <a
+                            class="se-modern-button"
+                            href="<?php echo esc_url(get_permalink($event['post_id'])); ?>"
+                        >
+                            WEITERE INFORMATIONEN
+                        </a>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+            <!-- 🔥 Pagination unten -->
+            <?php echo $pagination; ?>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
 }
+/**
+ * Shortcode:
+ * [fe_next_events]
+ */
+function fe_next_events_shortcode(){     
+    /*
+            $atts = shortcode_atts([
+            'limit' => 10,
+            
+            ], $atts);
 
-@media (max-width: 768px) {
-
-    .se-modern-events-wrapper {
-        padding: 20px;
+        $limit = intval($atts['limit']);
+    */
+    global $wpdb;
+    ob_start();
+    $table = SE_EVENTS_TABLE;
+    $event_db = new SE_Event_Repository();
+    $args = [
+                'status'     =>  'publish',
+                'event_type' => ['se, rce'],
+                'event_date' => 'future',
+                'sort' => 'ASC',
+                'search'     => '',
+                'limit'      => 5,
+                'offset'     => 0,
+            ];
+    $events =  $event_db->get_events($args);
+  
+    if (empty($events)) {
+        return '<div class="fe-events-empty">Keine Veranstaltungen gefunden.</div>';
     }
+    ?>
+    <div class="fe-events-wrapper">
+        <hr>
+        <?php foreach ($events as $event):
+              $time = substr($event['event_start_time'], 0 ,5);
+              $date  = date_i18n(' F ', strtotime($event['event_start']));
+                $day   = date_i18n('d', strtotime($event['event_start']));
+                $month = strtoupper(date_i18n('M', strtotime($event['event_start'])));
+                $svg = '
+                <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+                    <rect width="200" height="200" rx="12" fill="#f3f3f3"/>
+                    <rect width="200" height="48" fill="#c62828"/>
+                    <text x="100" y="35" font-family="Arial" font-size="20" fill="white" text-anchor="middle">'.$month.'</text>
+                    <text x="100" y="135" font-family="Arial" font-size="82" font-weight="bold" fill="#444" text-anchor="middle">'.$day.'</text>
+                </svg>';
 
-    .se-modern-title {
-        font-size: 15px;
-    }
+                 $image_calender = 'data:image/svg+xml;utf8,' . rawurlencode($svg);
 
-    .se-modern-month {
-        font-size: 15px;
-    }
 
-    .se-modern-event-title {
-        font-size: 15px;
-    }
-
-    .se-modern-description {
-        font-size: 12px;
-    }
-
-    .se-modern-meta {
-        font-size: 12px;
-    }
-
-    .se-modern-button {
-
-        width: 100%;
-
-        min-width: auto;
-    }
+            ?>
+            <div class="fe-event-box">
+                <div class="fe-event-border"></div>
+                <div class="fe-event-content">
+                    <div class="fe-event-title">
+                       <a href="<?php echo esc_url(get_permalink($event['post_id'])); ?>">
+                            <?php echo esc_html($event['event_name']); ?>
+                        </a>
+                    </div>
+                    <div class="fe-event-meta">
+                        <div class="fe-event-row">
+                               <img
+                                    src="<?php echo esc_attr($image_calender); ?>"
+                                    alt=""
+                                    style="width:30px; height:30px; object-fit:contain;"
+                                >
+                                <?php echo $date .  ' | ' . $time . ' Uhr'; ?>
+                        </div>
+                        <?php if (!empty($event['location_id'])): 
+                           $location =  $event_db->get_location_name($event['location_id']);
+                        ?>
+                            <div class="fe-event-row">
+                                    📍
+                                    <?php echo esc_html( $location ); ?>
+                                    <hr>
+                                
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <?php
+    return ob_get_clean();
 }
+add_shortcode(
+    'fe_next_events', 
+    'fe_next_events_shortcode');
 
-/* =========================================================
-   SEARCH BAR
-========================================================= */
-
-
-.se-modern-search {
-    display: flex;
-    align-items: stretch;
-
-    border: 1px solid #e5e5e5;
-    background: #fff;
-
-    min-height: 78px;
-    padding: 0;
-}
-
-/* Suchbereich */
-
-.se-search-field {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-
-    padding: 0 24px;
-    border-right: 1px solid #e5e5e5;
-}
-
-.se-search-icon {
-    font-size: 18px;
-    color: #888;
-}
-
-.se-search-field input {
-    width: 100%;
-    border: none;
-    outline: none;
-    background: transparent;
-
-    font-size: 18px;
-    color: #555;
-}
-
-.se-search-field input::placeholder {
-    color: #999;
-}
-
-/* Button von parend theme */
-
-.se-search-button .icon {
-    width: 28px;
-    height: 28px;
-    fill: #fff;
-}
-
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media (max-width: 1100px) {
-    .se-modern-search {
-        grid-template-columns: 1fr;
-    }
-    .se-search-field,
-    .se-search-date,
-    .se-search-filter {
-        border-right: none;
-        border-bottom: 1px solid #ddd;
-    }
-
-    .se-search-button {
-        margin: 20px;
-    }
-}
-/* =========================================================
-   KI generierte bildbeschriftung
-========================================================= */
-
-.se-search-ki {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 4px 10px;
-    /*------------
-    background: #f3f3f3;
-    border-left: 3px solid #b5121b;
-    color: #666;
-    ----------*/
-    font-size: 10px;
-    line-height: 1.4;
-    font-style: italic;
-}
+add_shortcode(
+    'se_events_modern',
+    'se_events_modern_shortcode'
+);
