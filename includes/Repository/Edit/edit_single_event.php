@@ -1,8 +1,6 @@
 <?php
 
- //require_once SE_EVENTS_PATH . 'debug/error_log.php';
- //$db_se = new debug_tests();
- //global $db_se;
+
 
 class SE_Event_Editor extends SE_GET_EVENT_TYP{
 

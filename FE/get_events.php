@@ -200,7 +200,6 @@ function se_events_modern_shortcode($atts = []) {
         $pagination .= '</div>';
     }
 
-  
 
     ?>
     <div class="se-events-engine">

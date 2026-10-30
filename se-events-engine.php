@@ -2,11 +2,11 @@
 /**
  * Plugin Name: SE Events Engine from RKnOT
  * Description: SE Event Manager developed by RKnOT
- * Version: 3.2.8
+ * Version: 3.4.0
  * Author: RKnOT
  * Copyright(C) 2026, RKnOT 
  * 
- * version 3.4,0    -> event ki feld mit edit hinzugefügt
+ * version 3.4,0    -> event ki feld mit edit hinzugefügt und db struktur erzeugen, wenn nicht vorhanden
  * version 3.2.9    -> 2026_10_28 Änderung bei Umstellung auf PHP 8.5.12 in se_event_add.php
  * version 3.2.8    -> 2026_08_20 Vereinheitlichung der globalen Variablen und Vereinfachungen
  * version 3.2.7    -> 2026_08_19 Vereinheitlichung der globalen Variablen
@@ -35,9 +35,17 @@ if (!defined('POSTS_TABLE')) {
 if (!defined('USERS_TABLE')) {
     define('USERS_TABLE', $wpdb->prefix . 'users');
 }
+// check if db exsists
+require_once SE_EVENTS_PATH . 'includes/SE-Events-Setup/Check-se-event-db.php';
+$check_db = new SE_Events_Database();
+$db_array = $check_db->check_tables();
+
 
 require_once SE_EVENTS_PATH . 'includes/Core/Engine.php';
 require_once SE_EVENTS_PATH . 'debug/stats.php';
+if(!$db_array) {
+    wp_die('die se db konnte nicht erstellt werden');
+}
 
 add_action('plugins_loaded', ['SE_Events_Engine', 'run']);
 
