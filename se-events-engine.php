@@ -2,10 +2,11 @@
 /**
  * Plugin Name: SE Events Engine from RKnOT
  * Description: SE Event Manager developed by RKnOT
- * Version: 3.4.0
+ * Version: 10.0.0
  * Author: RKnOT
  * Copyright(C) 2026, RKnOT 
  * 
+ * version 10.0.0   -> branch se-event-allgemein ohne tortuga themes und db exists check
  * version 3.4,0    -> event ki feld mit edit hinzugefügt und db struktur erzeugen, wenn nicht vorhanden
  * version 3.2.9    -> 2026_10_28 Änderung bei Umstellung auf PHP 8.5.12 in se_event_add.php
  * version 3.2.8    -> 2026_08_20 Vereinheitlichung der globalen Variablen und Vereinfachungen
