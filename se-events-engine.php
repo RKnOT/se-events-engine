@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SE Events Engine from RKnOT
  * Description: SE Event Manager developed by RKnOT
- * Version: 3.2.8
+ * Version: 3.4.0
  * Author: RKnOT
  * Copyright(C) 2026, RKnOT 
  * 
