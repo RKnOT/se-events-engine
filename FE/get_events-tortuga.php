@@ -1,5 +1,16 @@
 <?php
 defined('ABSPATH') || exit;
+
+
+add_action('init', function () {
+
+    add_shortcode('se_test', function () {
+        return '<strong>SHORTCODE TEST ERFOLGREICH</strong>';
+    });
+
+}, 20);
+
+
 function se_events_modern_shortcode($atts = []) {
     global $wpdb;
     
